@@ -1,6 +1,0 @@
-{
-  "name": "message",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./message.js"
-}

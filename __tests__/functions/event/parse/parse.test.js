@@ -49,8 +49,7 @@ describe('parse()', () => {
 
 
   describe('when parameters are invalid', () => {
-    it('throws an error', () => {
-      expect(() => parse({})).toThrow(Error);
-    });
+    it('rejects with an error', () =>
+      expect(parse({})).rejects.toEqual(expect.any(Error)));
   });
 });

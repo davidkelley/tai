@@ -1,6 +1,5 @@
 import Velocity from 'velocityjs';
 import wrappedError from 'error/wrapped';
-// import typedError from 'error/typed';
 
 import util from './util';
 import withInput from './input';
@@ -19,6 +18,9 @@ const renderError = wrappedError({
 
 export default async function parse(template, { input = '', context = {} }) {
   try {
+    // if (!(typeof template === 'string')) {
+    //   throw typeError({ typeof: typeof template });
+    // }
     const parsed = Velocity.parse(template);
     const text = new Compile(parsed).render({
       context,
