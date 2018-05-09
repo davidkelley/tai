@@ -18,9 +18,6 @@ const renderError = wrappedError({
 
 export default async function parse(template, { input = '', context = {} }) {
   try {
-    // if (!(typeof template === 'string')) {
-    //   throw typeError({ typeof: typeof template });
-    // }
     const parsed = Velocity.parse(template);
     const text = new Compile(parsed).render({
       context,
