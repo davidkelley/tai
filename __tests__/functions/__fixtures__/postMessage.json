@@ -1,0 +1,19 @@
+{
+	"ok": true,
+	"channel": "C8HU0NBGF",
+	"ts": "1513786381.000138",
+	"message": {
+		"text": "CSS auxiliary AI",
+		"username": "Sparkle",
+		"icons": {
+			"emoji": ":+1:",
+			"image_64": "https://a.slack-edge.com/f5d6f/img/emoji_2016_06_08/apple/1f44d.png"
+		},
+		"bot_id": "B8GRF6UQ2",
+		"type": "message",
+		"subtype": "bot_message",
+		"ts": "1513786381.000138"
+	},
+	"scopes": ["identify", "read", "post", "client", "apps"],
+	"acceptedScopes": ["chat:write:bot", "post"]
+}

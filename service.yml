@@ -1,0 +1,87 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Transform: AWS::Serverless-2016-10-31
+
+Description: "[CloudFormation] [Utility] Posting CloudWatch Events to Slack."
+
+Parameters:
+
+  Username:
+    Type: String
+    Description: |
+      The username of the bot inside Slack. Messages will be posted under this
+      username.
+
+  Icon:
+    Type: String
+    ConstraintDescription: |
+      Must be a slack compatible emoji, starting and ending with a colon.
+    Description: |
+      The Emoji Icon for the bot.
+
+Globals:
+  Function:
+    Runtime: nodejs8.10
+    Timeout: 10
+
+Resources:
+
+  EventTopic:
+    Type: AWS::SNS::Topic
+
+  EventFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: event.handler
+      CodeUri: ../out
+      Role: !GetAtt EventFunctionExecutionRole.Arn
+      Environment:
+        Variables:
+          BOT_USERNAME: !Ref Username
+          BOT_ICON: !Ref Icon
+
+  EventFunctionLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${EventFunction}"
+      RetentionInDays: 3
+
+  EventFunctionExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Path: "/"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - !Sub "lambda.${AWS::URLSuffix}"
+            Action: sts:AssumeRole
+
+  EventFunctionExecutionPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: EventFunctionExecutionPolicy
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Action:
+              - logs:CreateLogGroup
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Resource:
+              - !GetAtt EventFunctionLogGroup.Arn
+      Roles:
+        - !Ref EventFunctionExecutionRole
+        
+Outputs:
+
+  EventFunction:
+    Description: The name of the EventFunction to fire
+    Value: !Ref EventFunction
+
+  EventFunctionArn:
+    Description: The ARN of the EventFunction
+    Value: !GetAtt EventFunction.Arn

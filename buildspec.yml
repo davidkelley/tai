@@ -1,0 +1,51 @@
+version: 0.2
+
+cache:
+  paths:
+    - node_modules
+
+env:
+  variables:
+    ARTIFACT_STORE: CODEPIPELINE
+    AWS_ACCOUNT_ID: CODEPIPELINE
+    BOT_TOKEN: CODEPIPELINE
+
+phases:
+  install:
+    commands:
+      - echo "Updating AWS CLI..."
+      - pip install --upgrade awscli
+
+      - echo "Create output directory"
+      - mkdir out
+
+      - echo "Installing Mustache Globally"
+      - npm install -g mustache
+
+  pre_build:
+    commands:
+      - echo "Creating AWS Config file"
+      - node -e 'console.log(JSON.stringify(process.env))' > out/build.json
+
+      - echo "Installing dependencies"
+      - npm install
+
+  build:
+    commands:
+      - echo "Running lint..."
+      - npm run lint
+
+      - echo "Running tests..."
+      - npm run test
+
+      - echo "Packaging..."
+      - npm run build
+
+      - echo "Compiling Cloudformation (Bucket $S3_BUCKET)..."
+      - aws cloudformation package --template-file service.yml --s3-prefix build --s3-bucket $ARTIFACT_STORE --output-template-file out/template.yml
+
+artifacts:
+  type: zip
+  discard-paths: yes
+  files:
+    - out/**/*

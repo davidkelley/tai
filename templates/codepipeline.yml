@@ -1,0 +1,43 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: |
+  Deploys a parameter to Parameter Store
+
+Parameters:
+
+  Key:
+    Type: String
+    Description: |
+      The parameter key to place into parameter store.
+
+Resources:
+
+  TemplateParameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Ref Key
+      Type: String
+      Value: !Base64 >
+          #set($detail = $input.path('$.detail'))
+          #set($type = $input.path('$.type'))
+          {
+            "channel": "$context.channel",
+            "attachments": [
+              {
+                "author": "AWS CodePipeline",
+                "author_icon": "https://platform.slack-edge.com/img/default_application_icon.png",
+                "title": "$context.title",
+                "title_link": "https://${context.region}.console.aws.amazon.com/codepipeline/home#/view/$detail.pipeline",
+                "footer": "$type",
+                "footer_icon": "https://platform.slack-edge.com/img/default_application_icon.png",
+                #if ($detail.state == 'SUCCEEDED' || $detail.state == 'RESUMED')
+                "color": "good",
+                #elseif ($detail.state == 'CANCELED' || $detail.state == 'FAILED')
+                "color": "danger",
+                #else
+                "color": "#2196F3",
+                #end
+                "text": "$detail.type.category action '$detail.action' ($detail.type.provider) in stage '$detail.stage' has $detail.state.toLowerCase()"
+              }
+            ]
+          }

@@ -1,0 +1,101 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: |
+  Deploys a parameter to Parameter Store
+
+Parameters:
+
+  Key:
+    Type: String
+    Description: |
+      The parameter key to place into parameter store.
+
+Resources:
+
+  TemplateParameter:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Ref Key
+      Type: String
+      Value: !Base64 >
+        #set($type = $input.path('$.type'))
+        #set($detail = $input.path('$.detail'))
+        #set($status = $detail['build-status'])
+        #set($id = $detail['build-id'].split('/')[1])
+        #set($project = $detail['project-name'])
+        #set($stream = $id.split(':')[1])
+        #set($phase = $detail['current-phase'])
+        {
+          "channel": "$context.channel",
+          #if ($status == 'IN_PROGRESS' && $phase == 'SUBMITTED')
+          "attachments": [
+            {
+              "author_name": "AWS CodeBuild",
+              "author_icon": "https://platform.slack-edge.com/img/default_application_icon.png",
+              "title": "$context.title",
+              "title_link": "https://${context.region}.console.aws.amazon.com/codebuild/home#/builds/$project/view",
+              "footer": "$type",
+              "footer_icon": "https://platform.slack-edge.com/img/default_application_icon.png",
+              "color": "#2196F3",
+              "text": "Build started at $detail['additional-information']['build-start-time']",
+              "actions": [
+                {
+                  "type": "button",
+                  "text": "View Status",
+                  "url": "https://${context.region}.console.aws.amazon.com/codebuild/home#/builds/$id/view/new",
+                  "style": "primary"
+                },
+                {
+                  "type": "button",
+                  "text": "View Logs",
+                  "url": "https://${context.region}.console.aws.amazon.com/cloudwatch/home#logEventViewer:group=/aws/codebuild/$project;stream=$stream",
+                  "style": "primary"
+                }
+              ]
+            }
+          ]
+          #else
+          "attachments": [
+            {
+              "author_name": "AWS CodeBuild",
+              "author_icon": ":aws-service:",
+              "title": "$context.title",
+              "title_link": "https://${context.region}.console.aws.amazon.com/codebuild/home#/builds/$project/view",
+              "footer": "$type",
+              "footer_icon": "https://platform.slack-edge.com/img/default_application_icon.png",
+              #if ($status == 'SUCCEEDED')
+              "color": "good",
+              "text": "Build <https://${context.region}.console.aws.amazon.com/codebuild/home#/builds/$id/view/new|#$detail['additional-information']['artifact']['sha256sum'].substring(0,8)> passed",
+              #else
+              "color": "danger",
+              #set($phases = $detail['additional-information']['phases'])
+              #foreach($phase in $phases)
+              #if ($phase['phase-type'] && $phase['phase-status'] == 'FAILED')
+              "text": "Build failed in phase '$phase['phase-type']' after $phase['duration-in-seconds'] seconds",
+              "fields": [
+                {
+                  "title": "Error",
+                  "value": "$phase['phase-context'][0]"
+                }
+              ],
+              #end
+              #end
+              #end
+              "actions": [
+                {
+                  "type": "button",
+                  "text": "View Status",
+                  "url": "https://${context.region}.console.aws.amazon.com/codebuild/home#/builds/$id/view/new",
+                  "style": "primary"
+                },
+                {
+                  "type": "button",
+                  "text": "View Logs",
+                  "url": "https://${context.region}.console.aws.amazon.com/cloudwatch/home#logEventViewer:group=/aws/codebuild/$project;stream=$stream",
+                  "style": "primary"
+                }
+              ]
+            }
+          ]
+          #end
+        }
