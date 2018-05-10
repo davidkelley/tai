@@ -30,7 +30,6 @@ Resources:
           "attachments": [
             {
               "author_name": "Build Status",
-              "author_icon": "https://github.com/davidkelley/tai/raw/master/.github/images/tai.png",
               "title": "$context.title (${context.region})",
               "title_link": "https://${context.region}.console.aws.amazon.com/codebuild/home#/builds/$project/view",
               "color": "#2196F3",
@@ -55,7 +54,6 @@ Resources:
           "attachments": [
             {
               "author_name": "Build Status",
-              "author_icon": "https://github.com/davidkelley/tai/raw/master/.github/images/tai.png",
               "title": "$context.title (${context.region})",
               "title_link": "https://${context.region}.console.aws.amazon.com/codebuild/home#/builds/$project/view",
               #if ($status == 'SUCCEEDED')
