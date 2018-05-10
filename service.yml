@@ -33,7 +33,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: event.handler
-      CodeUri: ../out
+      CodeUri: ./out
       Role: !GetAtt EventFunctionExecutionRole.Arn
       Environment:
         Variables:
@@ -75,7 +75,7 @@ Resources:
               - !GetAtt EventFunctionLogGroup.Arn
       Roles:
         - !Ref EventFunctionExecutionRole
-        
+
 Outputs:
 
   EventFunction:
