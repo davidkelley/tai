@@ -21,7 +21,7 @@ const client = new Slack({ token: C.BOT_TOKEN });
 const defaults = {
   parse: true,
   username: C.BOT_USERNAME,
-  icon_emoji: C.BOT_ICON,
+  icon_url: C.BOT_ICON,
 };
 
 /**
