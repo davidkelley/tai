@@ -9,11 +9,6 @@ module.exports = {
   externals: {
     'aws-sdk': 'aws-sdk',
   },
-  resolve: {
-    alias: {
-      jsonpath: 'jsonpath/jsonpath.min.js',
-    },
-  },
   output: {
     libraryTarget: 'commonjs2',
     path: `${__dirname}/out`,
@@ -23,7 +18,6 @@ module.exports = {
     new UglifyJSPlugin(),
   ],
   module: {
-    noParse: [/dtrace-provider$/, /safe-json-stringify$/, /mv/],
     rules: [
       {
         test: /\.js$/,

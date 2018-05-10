@@ -1,4 +1,4 @@
-import jsonpath from 'jsonpath';
+import jsonpath from 'jsonpath/jsonpath.min';
 
 export default function (request) {
   const input = {

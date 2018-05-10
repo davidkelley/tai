@@ -2,8 +2,6 @@ import parse from './parse';
 import validate from './validate';
 import Message from '../message';
 
-import Logger from '../logger';
-
 export async function handler(event, _, cb) {
   try {
     const { Template, Body: body, Context: context } = await validate(event);
@@ -13,7 +11,6 @@ export async function handler(event, _, cb) {
     const response = await Message.post(payload);
     cb(null, response);
   } catch (err) {
-    Logger.error(err);
     cb(err);
   }
 }

@@ -8,7 +8,6 @@ env:
   variables:
     ARTIFACT_STORE: CODEPIPELINE
     AWS_ACCOUNT_ID: CODEPIPELINE
-    BOT_TOKEN: CODEPIPELINE
 
 phases:
   install:
@@ -18,9 +17,6 @@ phases:
 
       - echo "Create output directory"
       - mkdir out
-
-      - echo "Installing Mustache Globally"
-      - npm install -g mustache
 
   pre_build:
     commands:
