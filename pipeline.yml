@@ -130,6 +130,10 @@ Resources:
                 ChangeSetName: !Sub "${AWS::StackName}-service"
                 TemplateConfiguration: GitHubOutput::config.json
                 TemplatePath: BuildOutput::template.yml
+                ParameterOverrides: !Sub |
+                  {
+                    "Token": "${SlackBotToken}"
+                  }
             - Name: Deploy
               RunOrder: 3
               ActionTypeId:
@@ -208,9 +212,6 @@ Resources:
           - Name: AWS_ACCOUNT_ID
             Type: PLAINTEXT
             Value: !Ref AWS::AccountId
-          - Name: BOT_TOKEN
-            Type: PLAINTEXT
-            Value: !Ref SlackBotToken
       Artifacts:
         Type: CODEPIPELINE
 

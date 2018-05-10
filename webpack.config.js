@@ -1,5 +1,4 @@
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const webpack = require('webpack');
 
 module.exports = {
   mode: 'production',
@@ -21,9 +20,6 @@ module.exports = {
     filename: '[name].js',
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.BOT_TOKEN': JSON.stringify(process.env.BOT_TOKEN || 'development'),
-    }),
     new UglifyJSPlugin(),
   ],
   module: {

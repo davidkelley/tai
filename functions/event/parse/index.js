@@ -16,7 +16,7 @@ const renderError = wrappedError({
   type: 'event.parser.error',
 });
 
-export default async function parse(template, { input = '', context = {} }) {
+export default async function parse(template, { input = '', context = {} } = {}) {
   try {
     const parsed = Velocity.parse(template);
     const text = new Compile(parsed).render({

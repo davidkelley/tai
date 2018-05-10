@@ -6,6 +6,11 @@ Description: "[CloudFormation] [Utility] Posting CloudWatch Events to Slack."
 
 Parameters:
 
+  Token:
+    Type: String
+    Description: |
+      The Slack App access token the bot will use to post messages.
+
   Username:
     Type: String
     Description: |
@@ -21,7 +26,7 @@ Parameters:
 
 Globals:
   Function:
-    Runtime: nodejs8.10
+    Runtime: nodejs6.10
     Timeout: 10
 
 Resources:
@@ -37,6 +42,7 @@ Resources:
       Role: !GetAtt EventFunctionExecutionRole.Arn
       Environment:
         Variables:
+          BOT_TOKEN: !Ref Token
           BOT_USERNAME: !Ref Username
           BOT_ICON: !Ref Icon
 
