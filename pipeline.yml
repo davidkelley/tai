@@ -332,3 +332,13 @@ Resources:
                 Resource:
                   - !GetAtt PipelineArtifactStore.Arn
                   - !Sub "${PipelineArtifactStore.Arn}/*"
+
+Outputs:
+
+  BuildConsoleURL:
+    Description: Build URL
+    Value: !Sub "https://console.aws.amazon.com/codebuild/home?region=${AWS::Region}#/projects/${Build}/view"
+
+  PipelineConsoleURL:
+    Description: Pipeline URL
+    Value: !Sub "https://console.aws.amazon.com/codepipeline/home?region=${AWS::Region}#/view/${Pipeline}"
