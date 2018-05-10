@@ -26,7 +26,7 @@ Resources:
               {
                 "author": "Pipeline Status",
                 "author_icon": "https://github.com/davidkelley/tai/raw/master/.github/images/tai.png",
-                "title": "$context.title",
+                "title": "$context.title (${context.region})",
                 "title_link": "https://${context.region}.console.aws.amazon.com/codepipeline/home#/view/$detail.pipeline",
                 #if ($detail.state == 'SUCCEEDED' || $detail.state == 'RESUMED')
                 "color": "good",

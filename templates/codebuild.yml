@@ -32,7 +32,7 @@ Resources:
             {
               "author_name": "Build Status",
               "author_icon": "https://github.com/davidkelley/tai/raw/master/.github/images/tai.png",
-              "title": "$context.title",
+              "title": "$context.title (${context.region})",
               "title_link": "https://${context.region}.console.aws.amazon.com/codebuild/home#/builds/$project/view",
               "color": "#2196F3",
               "text": "Build started at $detail['additional-information']['build-start-time']",
@@ -57,7 +57,7 @@ Resources:
             {
               "author_name": "Build Status",
               "author_icon": "https://github.com/davidkelley/tai/raw/master/.github/images/tai.png",
-              "title": "$context.title",
+              "title": "$context.title (${context.region})",
               "title_link": "https://${context.region}.console.aws.amazon.com/codebuild/home#/builds/$project/view",
               #if ($status == 'SUCCEEDED')
               "color": "good",
