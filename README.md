@@ -1,6 +1,8 @@
-# AWS CloudWatch Event Notifier
+# Meet Tai
 
-Send **any** [CloudWatch Event](http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/EventTypes.html) to **any** Slack channel. Styled & formatted in a way that works for you, using template logic to completely transform the original event.
+![Tai][tai]
+
+Tai can send **any** [CloudWatch Event](http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/EventTypes.html) to **any** Slack channel. Styled & formatted in a way that works for you, using template logic to completely transform the original event.
 
 Here's an example:
 
@@ -169,5 +171,5 @@ Resources:
 
 ---
 
-[logo]: /.github/images/logo-small.png
+[tai]: /.github/images/tai.png
 [codebuild-example]: /.github/images/codebuild-example.png

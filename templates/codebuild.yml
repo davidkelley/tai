@@ -30,12 +30,10 @@ Resources:
           #if ($status == 'IN_PROGRESS' && $phase == 'SUBMITTED')
           "attachments": [
             {
-              "author_name": "AWS CodeBuild",
-              "author_icon": "https://platform.slack-edge.com/img/default_application_icon.png",
+              "author_name": "Build Status",
+              "author_icon": "https://github.com/davidkelley/tai/raw/master/.github/images/tai.png",
               "title": "$context.title",
               "title_link": "https://${context.region}.console.aws.amazon.com/codebuild/home#/builds/$project/view",
-              "footer": "$type",
-              "footer_icon": "https://platform.slack-edge.com/img/default_application_icon.png",
               "color": "#2196F3",
               "text": "Build started at $detail['additional-information']['build-start-time']",
               "actions": [
@@ -57,12 +55,10 @@ Resources:
           #else
           "attachments": [
             {
-              "author_name": "AWS CodeBuild",
-              "author_icon": ":aws-service:",
+              "author_name": "Build Status",
+              "author_icon": "https://github.com/davidkelley/tai/raw/master/.github/images/tai.png",
               "title": "$context.title",
               "title_link": "https://${context.region}.console.aws.amazon.com/codebuild/home#/builds/$project/view",
-              "footer": "$type",
-              "footer_icon": "https://platform.slack-edge.com/img/default_application_icon.png",
               #if ($status == 'SUCCEEDED')
               "color": "good",
               "text": "Build <https://${context.region}.console.aws.amazon.com/codebuild/home#/builds/$id/view/new|#$detail['additional-information']['artifact']['sha256sum'].substring(0,8)> passed",

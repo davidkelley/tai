@@ -24,12 +24,10 @@ Resources:
             "channel": "$context.channel",
             "attachments": [
               {
-                "author": "AWS CodePipeline",
-                "author_icon": "https://platform.slack-edge.com/img/default_application_icon.png",
+                "author": "Pipeline Status",
+                "author_icon": "https://github.com/davidkelley/tai/raw/master/.github/images/tai.png",
                 "title": "$context.title",
                 "title_link": "https://${context.region}.console.aws.amazon.com/codepipeline/home#/view/$detail.pipeline",
-                "footer": "$type",
-                "footer_icon": "https://platform.slack-edge.com/img/default_application_icon.png",
                 #if ($detail.state == 'SUCCEEDED' || $detail.state == 'RESUMED')
                 "color": "good",
                 #elseif ($detail.state == 'CANCELED' || $detail.state == 'FAILED')
