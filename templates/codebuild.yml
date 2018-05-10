@@ -58,22 +58,9 @@ Resources:
               "title_link": "https://${context.region}.console.aws.amazon.com/codebuild/home#/builds/$project/view",
               #if ($status == 'SUCCEEDED')
               "color": "good",
-              "text": "Build <https://${context.region}.console.aws.amazon.com/codebuild/home#/builds/$id/view/new|#$detail['additional-information']['artifact']['sha256sum'].substring(0,8)> passed",
+              "text": "Build <https://${context.region}.console.aws.amazon.com/codebuild/home#/builds/$id/view/new|#$detail['additional-information']['artifact']['sha256sum'].substring(0,8)> passed"
               #else
               "color": "danger",
-              #set($phases = $detail['additional-information']['phases'])
-              #foreach($phase in $phases)
-              #if ($phase['phase-type'] && $phase['phase-status'] == 'FAILED')
-              "text": "Build failed in phase '$phase['phase-type']' after $phase['duration-in-seconds'] seconds",
-              "fields": [
-                {
-                  "title": "Error",
-                  "value": "$phase['phase-context'][0]"
-                }
-              ],
-              #end
-              #end
-              #end
               "actions": [
                 {
                   "type": "button",
@@ -87,7 +74,20 @@ Resources:
                   "url": "https://${context.region}.console.aws.amazon.com/cloudwatch/home#logEventViewer:group=/aws/codebuild/$project;stream=$stream",
                   "style": "primary"
                 }
+              ],
+              #set($phases = $detail['additional-information']['phases'])
+              #foreach($phase in $phases)
+              #if ($phase['phase-type'] && $phase['phase-status'] == 'FAILED')
+              "text": "Build failed in phase '$phase['phase-type']' after $phase['duration-in-seconds'] seconds",
+              "fields": [
+                {
+                  "title": "Error",
+                  "value": "$phase['phase-context'][0]"
+                }
               ]
+              #end
+              #end
+              #end
             }
           ]
           #end
