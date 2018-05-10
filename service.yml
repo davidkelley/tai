@@ -81,7 +81,11 @@ Outputs:
   EventFunction:
     Description: The name of the EventFunction to fire
     Value: !Ref EventFunction
+    Export:
+      Name: EventFunction
 
   EventFunctionArn:
     Description: The ARN of the EventFunction
     Value: !GetAtt EventFunction.Arn
+    Export:
+      Name: EventFunctionArn

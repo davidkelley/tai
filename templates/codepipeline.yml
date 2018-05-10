@@ -1,7 +1,6 @@
 AWSTemplateFormatVersion: "2010-09-09"
 
-Description: |
-  Deploys a parameter to Parameter Store
+Description: "[CloudFormation] [Utility] CodePipeline Notification Template"
 
 Parameters:
 
